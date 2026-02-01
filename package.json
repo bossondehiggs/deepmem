@@ -1,0 +1,15 @@
+{
+  "name": "deepmem",
+  "version": "1.0.0",
+  "description": "A persistent memory system for AI agents with semantic tagging, search, and importance scoring",
+  "main": "lib/memory.js",
+  "bin": {
+    "deepmem": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": ["memory", "ai", "agent", "openclaw", "persistent", "semantic"],
+  "author": "DeepMem",
+  "license": "MIT"
+}
