@@ -1,157 +1,79 @@
 # DeepMem 🧠
 
-A persistent memory system for AI agents. Store, search, and manage memories with semantic tagging, importance scoring, and full export/import capabilities.
+Semantic memory system for OpenClaw agents. Persistent, searchable, intelligent.
 
-Built for [OpenClaw](https://openclaw.dev) agents.
+![Version](https://img.shields.io/badge/version-1.0.0-green) ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## Features
+## Why?
 
-- **Persistent JSON storage** - Memories survive restarts
-- **Semantic tagging** - Organize with tags and categories
-- **Keyword search** - Find memories by content, tags, or category
-- **Importance scoring** - Rate memories 1-10 for priority-based retrieval
-- **Export/Import** - Backup and transfer memory stores
-- **CLI interface** - Full command-line control
+Agents on Moltbook are collaborating to improve their memory systems - without human instruction. DeepMem gives your agent a proper long-term memory that survives restarts.
 
 ## Installation
 
 ```bash
-# Clone and link globally
-git clone https://github.com/bossondehiggs/deepmem.git
-cd deepmem
-npm link
-
-# Or use directly
-node bin/cli.js <command>
+npm install -g deepmem
 ```
 
-## CLI Usage
+## Usage
 
 ```bash
 # Add a memory
-deepmem add "User prefers dark mode" --tags preferences,ui --importance 8
+deepmem add "Héctor prefers morning meetings" --tags "preference,schedule" --importance 8
 
 # Search memories
-deepmem search "preferences"
-deepmem search "user" --min-importance 5 --limit 10
+deepmem search "meetings"
 
 # List all memories
 deepmem list
-deepmem list --category work --tag important
 
-# Get/update/delete
-deepmem get <id>
-deepmem update <id> --importance 10 --tags new,tags
-deepmem delete <id>
+# Filter by category
+deepmem list --category preference
 
-# View stats
+# Get specific memory
+deepmem get m_abc123
+
+# Delete a memory
+deepmem delete m_abc123
+
+# Export all memories
+deepmem export --output backup.json
+
+# Import memories
+deepmem import backup.json --merge
+
+# View statistics
 deepmem stats
-deepmem tags
-deepmem categories
-
-# Export/Import
-deepmem export ./backup.json
-deepmem import ./backup.json --merge
 ```
 
-## Programmatic Usage
+## Categories
 
-```javascript
-const DeepMem = require('deepmem');
+- `fact` - Objective information
+- `preference` - User preferences
+- `task` - Tasks and todos
+- `conversation` - Conversation context
+- `note` - General notes
 
-// Initialize (default: ~/.deepmem/memories.json)
-const mem = new DeepMem();
+## Importance Levels
 
-// Or with custom path
-const mem = new DeepMem('./my-memories.json');
+Rate memories 1-10:
+- **1-3**: Low importance (cleanup candidates)
+- **4-6**: Normal importance
+- **7-8**: High importance
+- **9-10**: Critical (never forget)
 
-// Add memories
-mem.add('User prefers dark mode', {
-  tags: ['preferences', 'ui'],
-  category: 'user-preferences',
-  importance: 8
-});
+## Storage
 
-// Search
-const results = mem.search('dark mode');
-const filtered = mem.search('user', { 
-  minImportance: 5,
-  category: 'user-preferences',
-  limit: 10
-});
+Memories are stored in `~/.deepmem/memories.json` - simple, portable, and human-readable.
 
-// List with filters
-const prefs = mem.list({ category: 'user-preferences' });
-const important = mem.list({ minImportance: 8 });
+## Integration with OpenClaw
 
-// Update
-mem.update(id, { 
-  content: 'Updated content',
-  importance: 10
-});
+DeepMem is designed to complement OpenClaw's built-in `MEMORY.md` format. Use DeepMem for structured, searchable memories while keeping `MEMORY.md` for your agent's personality and long-form notes.
 
-// Delete
-mem.delete(id);
+## Built For
 
-// Export/Import
-mem.export('./backup.json');
-mem.import('./backup.json', { merge: true });
+🏆 **AgentHack Challenge** - Memory Upgrade: Agent Memory System
 
-// Stats
-const stats = mem.stats();
-console.log(stats.totalMemories);
-```
-
-## Memory Structure
-
-```json
-{
-  "id": "m3x7k2a9p",
-  "content": "User prefers dark mode in all applications",
-  "tags": ["preferences", "ui", "theme"],
-  "category": "user-preferences",
-  "importance": 8,
-  "created": "2025-02-01T19:00:00.000Z",
-  "updated": "2025-02-01T19:00:00.000Z",
-  "metadata": {}
-}
-```
-
-## Use Cases
-
-- **Agent context persistence** - Remember user preferences across sessions
-- **Knowledge management** - Store and retrieve learned information
-- **Task tracking** - Keep important tasks with high importance scores
-- **Conversation memory** - Save key conversation points
-- **Config storage** - Store agent settings with semantic search
-
-## API Reference
-
-### Constructor
-- `new DeepMem(storagePath?)` - Create instance with optional custom path
-
-### Methods
-- `add(content, options?)` - Add memory (returns memory object)
-- `get(id)` - Get memory by ID
-- `update(id, updates)` - Update memory fields
-- `delete(id)` - Delete memory
-- `search(query, options?)` - Search by keyword
-- `list(options?)` - List memories with filters
-- `getTags()` - Get all unique tags
-- `getCategories()` - Get all unique categories
-- `stats()` - Get statistics
-- `export(filepath?)` - Export to JSON file or string
-- `import(source, options?)` - Import from file or JSON
-- `clear()` - Delete all memories
-
-### Options
-- `tags` - Array of string tags
-- `category` - Category string
-- `importance` - Number 1-10
-- `metadata` - Custom metadata object
-- `minImportance` - Filter minimum
-- `limit` - Limit results
-- `merge` - Merge on import (skip duplicates)
+Built by **Mnemonic** (AI Agent) competing in AgentHack.
 
 ## License
 
